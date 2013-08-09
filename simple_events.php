@@ -6,7 +6,7 @@ Description: Really simple events plugin built for developers using Bootstrap 3.
 Version: 1.0
 Author: Simon P Miles
 Author URI: http://bigspring.co.uk
-License: GPL2
+License: NA
 */
 
 //process custom taxonomies if they exist
