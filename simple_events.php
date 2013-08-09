@@ -38,7 +38,7 @@ function simple_events_setup() {
 	        'hierarchical' => true,
 	        'description' => 'Product custom post type',
 	        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-	        'taxonomies' => array( 'post_tag' ), 
+/* 	        'taxonomies' => array( 'post_tag' ),  */
 	        'public' => true,
 	        'show_ui' => true,
 	        'show_in_menu' => true,
