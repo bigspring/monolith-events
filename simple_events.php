@@ -12,8 +12,9 @@ License: NA
 //process custom taxonomies if they exist
 add_action( 'init', 'simple_events_setup', 0 );
 
-
-
+//fire up the ACF plugin
+define( 'ACF_LITE' , true );
+include_once('advanced-custom-fields/acf.php' );
 
 function simple_events_setup() {
 
@@ -265,9 +266,59 @@ if(function_exists("register_field_group"))
 		'menu_order' => 1,
 	));
 }
+
+
+//Template fallback
+add_action("template_redirect", 'my_theme_redirect');
+
+function my_theme_redirect() {
+    global $wp;
+    $plugindir = dirname( __FILE__ );
+
+    //Single event view
+    if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
+	        $templatefilename = 'single-events.php';
+	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
+	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        } else {
+	            $return_template = $plugindir . '/templates/' . $templatefilename;
+	        }
+        do_theme_redirect($return_template);
+        
+    //Archive event view
+    } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
+	        $templatefilename = 'archive-events.php';
+	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
+	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        } else {
+	            $return_template = $plugindir . '/templates/' . $templatefilename;
+	        }
+        do_theme_redirect($return_template);
+        
+
+    //Taxonomy Page
+    } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
+        $templatefilename = 'taxonomy-events_categories.php';
+        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
+            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+        } else {
+            $return_template = $plugindir . '/templates/' . $templatefilename;
+        }
+        do_theme_redirect($return_template);
+
+    }
+}
+
+function do_theme_redirect($url) {
+    global $post, $wp_query;
+    if (have_posts()) {
+        include($url);
+        die();
+    } else {
+        $wp_query->is_404 = true;
+    }
+}
 	
-
-
 }//end simple_events_setup
 
 
