@@ -2,11 +2,11 @@
 /*
 Plugin Name: Simple Events
 Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: Really simple events plugin built for developers using Bootstrap 3.0
+Description: A brief description of the Plugin.
 Version: 1.0
 Author: Simon P Miles
-Author URI: http://bigspring.co.uk
-License: NA
+Author URI: http://www.bigspring.co.uk
+License: GPL2
 */
 
 //process custom taxonomies if they exist
