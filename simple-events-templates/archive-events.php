@@ -63,66 +63,16 @@
 									    <td><?php the_field('venue_name') ?></td>
 								    </tr>
 								  <? endif; ?>
-								  	<?php if(get_field('address_one')) : ?>
-								    <tr>
-									    <td>Address One</td>
-									    <td><?php the_field('address_one') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('address_two')) : ?>
-								    <tr>
-									    <td>Address Two</td>
-									    <td><?php the_field('address_two') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('address_three')) : ?>
-								    <tr>
-									    <td>Address Three</td>
-									    <td><?php the_field('address_three') ?></td>
-								    </tr>
-								  <? endif; ?>
 								  	<?php if(get_field('city')) : ?>
 								    <tr>
 									    <td>City</td>
 									    <td><?php the_field('city') ?></td>
 								    </tr>
 								  <? endif; ?>
-								  	<?php if(get_field('post_code')) : ?>
-								    <tr>
-									    <td>Post Code</td>
-									    <td><?php the_field('post_code') ?></td>
-								    </tr>
-								  <? endif; ?>
 								  	<?php if(get_field('country')) : ?>
 								    <tr>
 									    <td>Country</td>
 									    <td><?php the_field('country') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('cost')) : ?>
-								    <tr>
-									    <td>Cost</td>
-									    <td><?php the_field('cost') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('facebook_link')) : ?>
-								    <tr>
-									    <td>Facebook</td>
-									    <td><?php the_field('facebook_link') ?></td>
-								    </tr>
-								  <? endif; ?>
-
-								  	<?php if(get_field('website_link')) : ?>
-								    <tr>
-									    <td>Website</td>
-									    <td><?php the_field('website_link') ?></td>
-								    </tr>
-								  <? endif; ?>
-
-								  	<?php if(get_field('google_maps_link')) : ?>
-								    <tr>
-									    <td>Google Map</td>
-									    <td><?php the_field('google_maps_link') ?></td>
 								    </tr>
 								  <? endif; ?>
 
