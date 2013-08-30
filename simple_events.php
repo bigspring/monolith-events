@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Simple Events
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
+Plugin URI: http://badgersaregreat.com
+Description: A simple events plugin with minimal styling.
 Version: 1.0
 Author: Simon P Miles
 Author URI: http://www.bigspring.co.uk
@@ -66,33 +66,6 @@ function simple_events_setup() {
 		  0 => 'events',
 		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );	    
 	    
-	    
-	    
-	    
-	    
-	    
-/**
- *  Install Add-ons
- *  
- *  The following code will include all 4 premium Add-Ons in your theme.
- *  Please do not attempt to include a file which does not exist. This will produce an error.
- *  
- *  The following code assumes you have a folder 'add-ons' inside your theme.
- *
- *  IMPORTANT
- *  Add-ons may be included in a premium theme/plugin as outlined in the terms and conditions.
- *  For more information, please read:
- *  - http://www.advancedcustomfields.com/terms-conditions/
- *  - http://www.advancedcustomfields.com/resources/getting-started/including-lite-mode-in-a-plugin-theme/
- */ 
-
-// Add-ons 
-// include_once('add-ons/acf-repeater/acf-repeater.php');
-// include_once('add-ons/acf-gallery/acf-gallery.php');
-// include_once('add-ons/acf-flexible-content/acf-flexible-content.php');
-// include_once( 'add-ons/acf-options-page/acf-options-page.php' );
-
-
 /**
  *  Register Field Groups
  *
@@ -142,8 +115,8 @@ if(function_exists("register_field_group"))
 			),
 			array (
 				'key' => 'field_5200e1b0acb22',
-				'label' => 'Address',
-				'name' => 'address',
+				'label' => 'Address One',
+				'name' => 'address_one',
 				'type' => 'text',
 				'default_value' => '',
 				'placeholder' => '',
@@ -152,6 +125,31 @@ if(function_exists("register_field_group"))
 				'formatting' => 'none',
 				'maxlength' => '',
 			),
+						array (
+				'key' => 'field_5200e1b0acb30',
+				'label' => 'Address Two',
+				'name' => 'address_two',
+				'type' => 'text',
+				'default_value' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+				'formatting' => 'none',
+				'maxlength' => '',
+			),
+			array (
+				'key' => 'field_5200e1b0acb31',
+				'label' => 'Address Three',
+				'name' => 'address_three',
+				'type' => 'text',
+				'default_value' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+				'formatting' => 'none',
+				'maxlength' => '',
+			),
+
 			array (
 				'key' => 'field_5200e1c3acb23',
 				'label' => 'City',
@@ -281,7 +279,7 @@ function my_theme_redirect() {
 	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
 	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
 	        } else {
-	            $return_template = $plugindir . '/templates/' . $templatefilename;
+	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
         
@@ -291,7 +289,7 @@ function my_theme_redirect() {
 	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
 	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
 	        } else {
-	            $return_template = $plugindir . '/templates/' . $templatefilename;
+	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
         
@@ -302,7 +300,7 @@ function my_theme_redirect() {
         if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
             $return_template = TEMPLATEPATH . '/' . $templatefilename;
         } else {
-            $return_template = $plugindir . '/templates/' . $templatefilename;
+            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
         }
         do_theme_redirect($return_template);
 
@@ -318,7 +316,12 @@ function do_theme_redirect($url) {
         $wp_query->is_404 = true;
     }
 }
-	
+
+
 }//end simple_events_setup
+
+
+
+
 
 
