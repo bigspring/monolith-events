@@ -136,7 +136,6 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 	</div><!-- /CONTAINER_CLASSES -->
 
 </div><!-- /wrapper-main -->
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/gmaps.js"></script>
 <script type="text/javascript">
 
 var map;

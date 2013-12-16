@@ -319,7 +319,7 @@ function load_simple_event_scripts() {
 		
 	if(is_singular('events')) {
 		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
-		wp_enqueue_script('gmapsjs', plugins_url('simple_events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
+		wp_enqueue_script('gmapsjs', plugins_url('simple-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
 	}
 }
 
