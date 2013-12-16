@@ -4,9 +4,13 @@
  * Simple Events single view
  *
  */
+
+$event_venue = get_field('venue_name');
+$event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
+//dump($event_address); die; 
 ?>
 
-<? get_template_parts( array( 'parts/html-header', 'parts/header' ) ); ?>
+<?php get_header() ?>
 
 <div class="wrapper-main" role="document">
 	
@@ -47,7 +51,7 @@
 						    <tr>
 							    <td>Time</td>
 							    <td><?php the_field('time') ?></td>
-						    </tr>
+						    </tr>						    
 						  <? endif; ?>
 						  	<?php if(get_field('venue_name')) : ?>
 						    <tr>
@@ -111,19 +115,14 @@
 						    </tr>
 						  <? endif; ?>
 
-						  	<?php if(get_field('google_maps_link')) : ?>
-						    <tr>
-							    <td>Google Map</td>
-							    <td><?php the_field('google_maps_link') ?></td>
-						    </tr>
-						  <? endif; ?>
-
 						  </table>
 						</div>
 					</section>
 						
 					<section class="event-content" itemprop="articleBody">	
-						<?php the_content(); ?>	
+						<?php the_content(); ?>
+						
+						<div id="map_container"></div>
 					</section>
 						
 				</article>	
@@ -137,4 +136,56 @@
 	</div><!-- /CONTAINER_CLASSES -->
 
 </div><!-- /wrapper-main -->
-<?php get_template_parts( array( 'parts/footer','parts/html-footer' ) ); ?>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/gmaps.js"></script>
+<script type="text/javascript">
+
+var map;
+jQuery(document).ready(function($){
+
+	var geocoder = new google.maps.Geocoder();
+	var address = '<?= $event_address ?>';
+
+	// get the long / lat  
+	geocoder.geocode({
+		'address': address
+	}, function(results, status) {
+
+		if (status == google.maps.GeocoderStatus.OK) {
+			var latitude = results[0].geometry.location.lat();
+			var longitude = results[0].geometry.location.lng();
+			
+	    	// generate the map
+			map = new GMaps({
+				div: '#map_container',
+				width: '100%',
+				height: '400px',
+				lat: latitude,
+				lng: longitude,
+				zoom: 12,
+				zoomControl : true,
+				zoomControlOpt: {
+					style : 'SMALL',
+					position: 'TOP_LEFT'
+	    		},
+			
+				panControl : false,
+				scrollwheel: false
+			});
+
+			map.addMarker({
+				lat: latitude,
+				lng: longitude,
+				title: '<?= $event_venue ?>',
+				infoWindow: {
+					content: '<div style="height: auto;"><b><?= $event_venue ?></b><br /><?= str_replace(', ', '<br />', $event_address) ?></div>'
+				}
+			});
+			
+			google.maps.event.trigger(map.markers[0], 'click');
+		}
+	});
+});
+
+</script>
+
+<?php get_footer() ?>

@@ -222,18 +222,6 @@ if(function_exists("register_field_group"))
 				'formatting' => 'none',
 				'maxlength' => '',
 			),
-			array (
-				'key' => 'field_5200e22cacb29',
-				'label' => 'Google Maps Link',
-				'name' => 'google_maps_link',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
 		),
 		'location' => array (
 			array (
@@ -272,12 +260,13 @@ add_action("template_redirect", 'my_theme_redirect');
 function my_theme_redirect() {
     global $wp;
     $plugindir = dirname( __FILE__ );
+	$themepath = get_template_directory_uri();
 
     //Single event view
     if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
 	        $templatefilename = 'single-events.php';
-	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        if (file_exists($themepath . '/' . $templatefilename)) {
+	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
@@ -286,8 +275,8 @@ function my_theme_redirect() {
     //Archive event view
     } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
 	        $templatefilename = 'archive-events.php';
-	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        if (file_exists($themepath . '/' . $templatefilename)) {
+	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
@@ -297,8 +286,8 @@ function my_theme_redirect() {
     //Taxonomy Page
     } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
         $templatefilename = 'taxonomy-events_categories.php';
-        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+        if (file_exists($themepath . '/' . $templatefilename)) {
+            $return_template = $themepath . '/' . $templatefilename;
         } else {
             $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
         }
@@ -317,11 +306,21 @@ function do_theme_redirect($url) {
     }
 }
 
+// -------------------------------------------------------------------------------------------------------
+// GMAPS STUFF
+// -------------------------------------------------------------------------------------------------------
+
+add_action('wp_enqueue_scripts', 'load_simple_event_scripts');
+
+/**
+ * Add gmaps dependencies
+ */
+function load_simple_event_scripts() {
+		
+	if(is_singular('events')) {
+		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
+		wp_enqueue_script('gmapsjs', plugins_url('simple_events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
+	}
+}
 
 }//end simple_events_setup
-
-
-
-
-
-
