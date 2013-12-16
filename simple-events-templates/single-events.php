@@ -6,7 +6,7 @@
  */
 ?>
 
-<? get_template_parts( array( 'parts/html-header', 'parts/header' ) ); ?>
+<?php get_header() ?>
 
 <div class="wrapper-main" role="document">
 	
@@ -32,10 +32,13 @@
 					</section>
 					<? } ?>
 					
-					<section class="event-detail">
+					<section class="event-content" itemprop="articleBody">	
+						<?php the_content(); ?>	
+					</section>
 					
-						<div class="table-responsive">
-						  <table class="table">
+					
+					<div class="event-detail panel panel-default">
+					
 						  
 						  	<?php if(get_field('date')) : ?>
 						    <tr>
@@ -118,13 +121,8 @@
 						    </tr>
 						  <? endif; ?>
 
-						  </table>
-						</div>
-					</section>
+					</div>
 						
-					<section class="event-content" itemprop="articleBody">	
-						<?php the_content(); ?>	
-					</section>
 						
 				</article>	
 				<?php endwhile; ?>
@@ -137,4 +135,4 @@
 	</div><!-- /CONTAINER_CLASSES -->
 
 </div><!-- /wrapper-main -->
-<?php get_template_parts( array( 'parts/footer','parts/html-footer' ) ); ?>
+<?php get_footer(); ?>

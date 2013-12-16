@@ -272,12 +272,13 @@ add_action("template_redirect", 'my_theme_redirect');
 function my_theme_redirect() {
     global $wp;
     $plugindir = dirname( __FILE__ );
+    $themepath = get_template_directory_uri();
 
     //Single event view
     if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
 	        $templatefilename = 'single-events.php';
-	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        if (file_exists($themepath . '/' . $templatefilename)) {
+	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
@@ -286,8 +287,8 @@ function my_theme_redirect() {
     //Archive event view
     } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
 	        $templatefilename = 'archive-events.php';
-	        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-	            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+	        if (file_exists($themepath . '/' . $templatefilename)) {
+	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
@@ -297,8 +298,8 @@ function my_theme_redirect() {
     //Taxonomy Page
     } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
         $templatefilename = 'taxonomy-events_categories.php';
-        if (file_exists(TEMPLATEPATH . '/' . $templatefilename)) {
-            $return_template = TEMPLATEPATH . '/' . $templatefilename;
+        if (file_exists($themepath . '/' . $templatefilename)) {
+            $return_template = $themepath . '/' . $templatefilename;
         } else {
             $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
         }

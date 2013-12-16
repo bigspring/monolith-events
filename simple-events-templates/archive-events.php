@@ -6,7 +6,7 @@
 ?>
 
 
-<?php get_template_parts( array( 'parts/html-header', 'parts/header' ) ); ?>
+<?php get_header() ?>
 
 <div class="wrapper-main" role="main">
 
@@ -23,66 +23,46 @@
 					<h1 class="archive-title h1">Upcoming Events</h1>
 					
 				</header>
-				
-				<p class="lead">This is the events archive view found in simple-events/templates</p>
-								
+						
+												
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 
 						<? // markup for post snippet, used in loops and queries ?>
 						<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
 						
-							<header class="event-title">
-								<h2 class="event-headline" itemprop="name"><a href="<?= get_permalink() ?>" title="<?php the_title(); ?>" class="post-permalink" itemprop="url"><?php the_title(); ?></a></h2>
-							</header>
+							<div class="row">
 							
-							<section class="event-excerpt">
-								<p itemprop="description"><?= get_the_excerpt(); ?></p>
-							</section>	
-							
-							<section class="event-detail">
-							
-								<div class="table-responsive">
-								  <table class="table">
-								  
+								<div class="col-md-2">
 								  	<?php if(get_field('date')) : ?>
-								    <tr>
-									    <td>Date</td>
-									    <td><?php the_field('date') ?></td>
-								    </tr>
+									    <?php the_field('date') ?>
   									<? endif; ?>
-								  	<?php if(get_field('time')) : ?>
-								    <tr>
-									    <td>Time</td>
-									    <td><?php the_field('time') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('venue_name')) : ?>
-								    <tr>
-									    <td>Venue</td>
-									    <td><?php the_field('venue_name') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('city')) : ?>
-								    <tr>
-									    <td>City</td>
-									    <td><?php the_field('city') ?></td>
-								    </tr>
-								  <? endif; ?>
-								  	<?php if(get_field('country')) : ?>
-								    <tr>
-									    <td>Country</td>
-									    <td><?php the_field('country') ?></td>
-								    </tr>
-								  <? endif; ?>
-
-								  </table>
 								</div>
-							</section>
-							
-							<footer class="event-footer">
-								<?php get_template_part('parts/meta/readmore'); ?>
-							</footer> <!-- end article footer -->
+						
+								<div class="col-md-10">
+									
+									
+									
+								
+									<header class="event-title">
+										<h3 class="event-headline" itemprop="name"><a href="<?= get_permalink() ?>" title="<?php the_title(); ?>" class="post-permalink" itemprop="url"><?php the_title(); ?></a></h3>
+										
+										<h4><?php the_field('venue_name') ?>, <?php the_field('city') ?></h4>
+										
+									</header>
+									
+									<section class="event-excerpt">
+										<p itemprop="description"><?= get_the_excerpt(); ?></p>
+									</section>	
+									
+									<footer class="event-footer">
+										<?php get_template_part('parts/meta/readmore'); ?>
+									</footer> <!-- end article footer -->
+									
+								</div><!-- end col md 10 -->
+
+						
+							</div><!-- end row -->
 						
 						</article>
 						<hr/>
@@ -108,4 +88,4 @@
 
 </div><!-- /main -->	
 
-<?php get_template_parts( array( 'parts/footer','parts/html-footer' ) ); ?>
+<?php get_footer(); ?>
