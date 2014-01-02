@@ -18,8 +18,8 @@ include_once('advanced-custom-fields/acf.php' );
 
 function simple_events_setup() {
 
-	
-	    $labels = array( 
+
+	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
 	        'singular_name' => _x( 'Event', 'events' ),
 	        'add_new' => _x( 'Add New', 'events' ),
@@ -33,8 +33,8 @@ function simple_events_setup() {
 	        'parent_item_colon' => _x( 'Parent Event:', 'events' ),
 	        'menu_name' => _x( 'Events', 'event' ),
 	    );
-	
-	    $args = array( 
+
+	    $args = array(
 	        'labels' => $labels,
 	        'hierarchical' => true,
 	        'description' => 'Product custom post type',
@@ -45,8 +45,8 @@ function simple_events_setup() {
 	        'show_in_menu' => true,
 	        'menu_position' => 5,
 	        'menu_icon' => plugins_url() . '/simple-events/img/group.png',
-	
-	        
+
+
 	        'show_in_nav_menus' => true,
 	        'publicly_queryable' => true,
 	        'exclude_from_search' => false,
@@ -56,16 +56,16 @@ function simple_events_setup() {
 	        'rewrite' => true,
 	        'capability_type' => 'post'
 	    );
-	
+
 	    register_post_type( 'events', $args );
-	    
-	    
-	    
+
+
+
 	    //register the events category taxonomy
 		register_taxonomy('event_categories',array (
 		  0 => 'events',
-		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );	    
-	    
+		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );
+
 /**
  *  Register Field Groups
  *
@@ -260,11 +260,8 @@ add_action("template_redirect", 'my_theme_redirect');
 function my_theme_redirect() {
     global $wp;
     $plugindir = dirname( __FILE__ );
-<<<<<<< HEAD
-    $themepath = get_template_directory_uri();
-=======
-	$themepath = get_template_directory_uri();
->>>>>>> origin/development
+    $themepath = get_template_directory();
+	$themepath = get_template_directory();
 
     //Single event view
     if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
@@ -275,7 +272,7 @@ function my_theme_redirect() {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
-        
+
     //Archive event view
     } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
 	        $templatefilename = 'archive-events.php';
@@ -285,7 +282,7 @@ function my_theme_redirect() {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
-        
+
 
     //Taxonomy Page
     } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
@@ -320,7 +317,7 @@ add_action('wp_enqueue_scripts', 'load_simple_event_scripts');
  * Add gmaps dependencies
  */
 function load_simple_event_scripts() {
-		
+
 	if(is_singular('events')) {
 		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
 		wp_enqueue_script('gmapsjs', plugins_url('simple_events/assets/gmaps.js'), array('jquery', 'gmapsapi'));

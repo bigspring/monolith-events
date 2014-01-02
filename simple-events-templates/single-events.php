@@ -1,49 +1,50 @@
-<?php 
+<?php
 /*
- * 
+ *
  * Simple Events single view
  *
  */
 
 $event_venue = get_field('venue_name');
 $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
-//dump($event_address); die; 
+//dump($event_address); die;
 ?>
 
 <?php get_header() ?>
 
 <div class="wrapper-main" role="document">
-	
+
 	<div class="<?= CONTAINER_CLASSES; ?>">
 
 		<? get_template_part('parts/breadcrumb'); // load the breadcrumbs ?>
-		
+
 		<div class="<?= ROW_CLASSES ?>">
-			
-			<div class="<?= MAIN_SIZE ?>" role="main" itemscope itemtype="http://schema.org/ItemPage">			
+
+			<div class="<?= MAIN_SIZE ?>" role="main" itemscope itemtype="http://schema.org/ItemPage">
 				<?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 				<? get_template_part('parts/page-header'); // load the page header ?>
-				
+
 				<div class="event-image">
 					<?php the_post_thumbnail() ?>
 				</div>
-				
-				<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>	
-					
+
+				<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
+
 					<?php if ($post->post_excerpt != '') { // show the excerpt if it exists ?>
-					<section class="event-excerpt lead" itemprop="description">		
-						<?php the_excerpt(); ?>		
+					<section class="event-excerpt lead" itemprop="description">
+						<?php the_excerpt(); ?>
 					</section>
 					<? } ?>
-					
-					<section class="event-content" itemprop="articleBody">	
-						<?php the_content(); ?>	
+
+					<section class="event-content" itemprop="articleBody">
+						<?php the_content(); ?>
 					</section>
-					
-					
+
+
 					<div class="event-detail panel panel-default">
-					
-						  
+
+						<table class="table">
+
 						  	<?php if(get_field('date')) : ?>
 						    <tr>
 							    <td>Date</td>
@@ -54,7 +55,7 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 						    <tr>
 							    <td>Time</td>
 							    <td><?php the_field('time') ?></td>
-						    </tr>						    
+						    </tr>
 						  <? endif; ?>
 						  	<?php if(get_field('venue_name')) : ?>
 						    <tr>
@@ -118,7 +119,6 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 						    </tr>
 						  <? endif; ?>
 
-<<<<<<< HEAD
 						  	<?php if(get_field('google_maps_link')) : ?>
 						    <tr>
 							    <td>Google Map</td>
@@ -126,34 +126,29 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 						    </tr>
 						  <? endif; ?>
 
-					</div>
-						
-=======
+
 						  </table>
 						</div>
 					</section>
-						
-					<section class="event-content" itemprop="articleBody">	
-						<?php the_content(); ?>
-						
+
+					<section class="event-content" itemprop="articleBody">
 						<div id="map_container"></div>
 					</section>
->>>>>>> origin/development
-						
-				</article>	
+
+				</article>
 				<?php endwhile; ?>
 			</div><!-- /MAIN_SIZES -->
-			
+
 			<? get_template_part('parts/sidebar'); // load the right sidebar ?>
-		
-		</div><!-- /ROW_CLASSES -->	
+
+		</div><!-- /ROW_CLASSES -->
 
 	</div><!-- /CONTAINER_CLASSES -->
 
 </div><!-- /wrapper-main -->
-<<<<<<< HEAD
+
 <?php get_footer(); ?>
-=======
+
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/gmaps.js"></script>
 <script type="text/javascript">
 
@@ -163,7 +158,7 @@ jQuery(document).ready(function($){
 	var geocoder = new google.maps.Geocoder();
 	var address = '<?= $event_address ?>';
 
-	// get the long / lat  
+	// get the long / lat
 	geocoder.geocode({
 		'address': address
 	}, function(results, status) {
@@ -171,7 +166,7 @@ jQuery(document).ready(function($){
 		if (status == google.maps.GeocoderStatus.OK) {
 			var latitude = results[0].geometry.location.lat();
 			var longitude = results[0].geometry.location.lng();
-			
+
 	    	// generate the map
 			map = new GMaps({
 				div: '#map_container',
@@ -185,7 +180,7 @@ jQuery(document).ready(function($){
 					style : 'SMALL',
 					position: 'TOP_LEFT'
 	    		},
-			
+
 				panControl : false,
 				scrollwheel: false
 			});
@@ -198,7 +193,7 @@ jQuery(document).ready(function($){
 					content: '<div style="height: auto;"><b><?= $event_venue ?></b><br /><?= str_replace(', ', '<br />', $event_address) ?></div>'
 				}
 			});
-			
+
 			google.maps.event.trigger(map.markers[0], 'click');
 		}
 	});
@@ -206,5 +201,3 @@ jQuery(document).ready(function($){
 
 </script>
 
-<?php get_footer() ?>
->>>>>>> origin/development
