@@ -6,7 +6,7 @@
  */
 
 $event_venue = get_field('venue_name');
-$event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
+$event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
 //dump($event_address); die; 
 ?>
 

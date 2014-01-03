@@ -18,7 +18,6 @@ include_once('advanced-custom-fields/acf.php' );
 
 function simple_events_setup() {
 
-	
 	    $labels = array( 
 	        'name' => _x( 'Events', 'events' ),
 	        'singular_name' => _x( 'Event', 'events' ),
@@ -66,193 +65,206 @@ function simple_events_setup() {
 		  0 => 'events',
 		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );	    
 	    
-/**
- *  Register Field Groups
- *
- *  The register_field_group function accepts 1 array which holds the relevant data to register a field group
- *  You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
- */
+	/**
+	 *  Register Field Groups
+	 *
+	 *  The register_field_group function accepts 1 array which holds the relevant data to register a field group
+	 *  You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
+	 */
 
-if(function_exists("register_field_group"))
-{
-	register_field_group(array (
-		'id' => 'acf_event-details',
-		'title' => 'Event Details',
-		'fields' => array (
-			array (
-				'key' => 'field_5200e14facb1f',
-				'label' => 'Date',
-				'name' => 'date',
-				'type' => 'date_picker',
-				'date_format' => 'yymmdd',
-				'display_format' => 'dd/mm/yy',
-				'first_day' => 1,
-			),
-			array (
-				'key' => 'field_5200e169acb20',
-				'label' => 'Time',
-				'name' => 'time',
-				'type' => 'text',
-				'instructions' => 'Use the 24h clock',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e19aacb21',
-				'label' => 'Venue Name',
-				'name' => 'venue_name',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e1b0acb22',
-				'label' => 'Address One',
-				'name' => 'address_one',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-						array (
-				'key' => 'field_5200e1b0acb30',
-				'label' => 'Address Two',
-				'name' => 'address_two',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e1b0acb31',
-				'label' => 'Address Three',
-				'name' => 'address_three',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-
-			array (
-				'key' => 'field_5200e1c3acb23',
-				'label' => 'City',
-				'name' => 'city',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e1d0acb24',
-				'label' => 'Post Code',
-				'name' => 'post_code',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e1e3acb25',
-				'label' => 'Country',
-				'name' => 'country',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e1f4acb26',
-				'label' => 'Cost',
-				'name' => 'cost',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e211acb27',
-				'label' => 'Facebook Link',
-				'name' => 'facebook_link',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-			array (
-				'key' => 'field_5200e221acb28',
-				'label' => 'Website Link',
-				'name' => 'website_link',
-				'type' => 'text',
-				'default_value' => '',
-				'placeholder' => '',
-				'prepend' => '',
-				'append' => '',
-				'formatting' => 'none',
-				'maxlength' => '',
-			),
-		),
-		'location' => array (
-			array (
+	if(function_exists("register_field_group"))
+	{
+		register_field_group(array (
+			'id' => 'acf_event-details',
+			'title' => 'Event Details',
+			'fields' => array (
 				array (
-					'param' => 'post_type',
-					'operator' => '==',
-					'value' => 'events',
-					'order_no' => 0,
-					'group_no' => 0,
+					'key' => 'field_5200e14facb1f',
+					'label' => 'Date',
+					'name' => 'date',
+					'type' => 'date_picker',
+					'date_format' => 'yymmdd',
+					'display_format' => 'dd/mm/yy',
+					'first_day' => 1,
+				),
+				array (
+					'key' => 'field_5200e169acb20',
+					'label' => 'Time',
+					'name' => 'time',
+					'type' => 'text',
+					'instructions' => 'Use the 24h clock',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e19aacb21',
+					'label' => 'Venue Name',
+					'name' => 'venue_name',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e1b0acb22',
+					'label' => 'Address One',
+					'name' => 'address_one',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+							array (
+					'key' => 'field_5200e1b0acb30',
+					'label' => 'Address Two',
+					'name' => 'address_two',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e1b0acb31',
+					'label' => 'Address Three',
+					'name' => 'address_three',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+
+				array (
+					'key' => 'field_5200e1c3acb23',
+					'label' => 'City',
+					'name' => 'city',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e1d0acb24',
+					'label' => 'Post Code',
+					'name' => 'post_code',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e1e3acb25',
+					'label' => 'Country',
+					'name' => 'country',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e1f4acb26',
+					'label' => 'Cost',
+					'name' => 'cost',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e211acb27',
+					'label' => 'Facebook Link',
+					'name' => 'facebook_link',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e221acb28',
+					'label' => 'Website Link',
+					'name' => 'website_link',
+					'type' => 'text',
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_5200e221acb29',
+					'label' => 'Date Passed',
+					'name' => 'date_passed',
+					'type' => 'text',
+					'default_value' => '0',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'formatting' => 'none',
+					'maxlength' => '',
 				),
 			),
-		),
-		'options' => array (
-			'position' => 'normal',
-			'layout' => 'default',
-			'hide_on_screen' => array (
-				0 => 'custom_fields',
-				1 => 'discussion',
-				2 => 'comments',
-				3 => 'slug',
-				4 => 'author',
-				5 => 'format',
-				6 => 'categories',
-				7 => 'tags',
-				8 => 'send-trackbacks',
+			'location' => array (
+				array (
+					array (
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'events',
+						'order_no' => 0,
+						'group_no' => 0,
+					),
+				),
 			),
-		),
-		'menu_order' => 1,
-	));
-}
+			'options' => array (
+				'position' => 'normal',
+				'layout' => 'default',
+				'hide_on_screen' => array (
+					0 => 'custom_fields',
+					1 => 'discussion',
+					2 => 'comments',
+					3 => 'slug',
+					4 => 'author',
+					5 => 'format',
+					6 => 'categories',
+					7 => 'tags',
+					8 => 'send-trackbacks',
+				),
+			),
+			'menu_order' => 1,
+		));
+	}
 
+}//end simple_events_setup
 
 //Template fallback
 add_action("template_redirect", 'my_theme_redirect');
@@ -264,6 +276,7 @@ function my_theme_redirect() {
 
     //Single event view
     if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
+
 	        $templatefilename = 'single-events.php';
 	        if (file_exists($themepath . '/' . $templatefilename)) {
 	            $return_template = $themepath . '/' . $templatefilename;
@@ -274,6 +287,7 @@ function my_theme_redirect() {
         
     //Archive event view
     } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
+
 	        $templatefilename = 'archive-events.php';
 	        if (file_exists($themepath . '/' . $templatefilename)) {
 	            $return_template = $themepath . '/' . $templatefilename;
@@ -285,6 +299,7 @@ function my_theme_redirect() {
 
     //Taxonomy Page
     } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
+
         $templatefilename = 'taxonomy-events_categories.php';
         if (file_exists($themepath . '/' . $templatefilename)) {
             $return_template = $themepath . '/' . $templatefilename;
@@ -292,8 +307,9 @@ function my_theme_redirect() {
             $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
         }
         do_theme_redirect($return_template);
-
     }
+
+    me_check_event_dates();
 }
 
 function do_theme_redirect($url) {
@@ -304,6 +320,59 @@ function do_theme_redirect($url) {
     } else {
         $wp_query->is_404 = true;
     }
+}
+
+// -------------------------------------------------------------------------------------------------------
+// CRON STUFF
+// -------------------------------------------------------------------------------------------------------
+
+register_activation_hook( __FILE__, 'me_create_daily_event_check_schedule' );
+
+/**
+* Schedule a daily event check (00:00) upon plugin registration
+*/
+function me_create_daily_event_check_schedule() {
+	//Use wp_next_scheduled to check if the event is already scheduled
+	$timestamp = wp_next_scheduled( 'me_create_daily_event_check' );
+
+	//If $timestamp == false schedule daily backups since it hasn't been done previously
+	if( $timestamp == false ) {
+		//Schedule the event for right now, then to repeat daily using the hook 'me_create_daily_event_check'
+		wp_schedule_event( strtotime('today midnight'), 'daily', 'me_create_daily_event_check' );
+	}
+}
+
+//Hook our function , wi_create_backup(), into the action me_create_daily_event_check
+add_action( 'me_create_daily_event_check', 'me_check_event_dates' );
+
+function me_check_event_dates() {
+
+	global $wpdb;
+
+	$datetime_events = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'date' OR meta_key = 'time'", ARRAY_A);
+
+	// consolidate date/time pairs
+	$events_cons = array();
+
+	foreach ($datetime_events as $post_meta => $post_meta_value) {
+		
+		if (!array_key_exists($post_meta_value['post_id'], $events_cons)) {
+			$events_cons[$post_meta_value['post_id']] = array();
+		}
+
+		$events_cons[$post_meta_value['post_id']][$post_meta_value['meta_key']] = $post_meta_value['meta_value'];
+	}
+
+	// check whether the date has passed and update date_passed field(s) accordingly
+	foreach ($events_cons as $event_id => $datetime_values) {
+		
+		$datetime = $datetime_values['date'] . ' ' . $datetime_values['time'] . ':00';
+
+		if ((time() - strtotime($datetime)) > 0) {
+
+			$wpdb->update($wpdb->postmeta, array('meta_value' => '1'), array('post_id' => $event_id, 'meta_key' => 'date_passed'));
+		}
+	}
 }
 
 // -------------------------------------------------------------------------------------------------------
@@ -322,5 +391,3 @@ function load_simple_event_scripts() {
 		wp_enqueue_script('gmapsjs', plugins_url('simple-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
 	}
 }
-
-}//end simple_events_setup
