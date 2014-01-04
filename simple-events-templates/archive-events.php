@@ -27,64 +27,67 @@
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 
-						<? // markup for post snippet, used in loops and queries ?>
-						<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
+						<?php if (the_field('date_passed') == 0) ?>
 
-							<header class="event-title">
-								<h2 class="event-headline" itemprop="name"><a href="<?= get_permalink() ?>" title="<?php the_title(); ?>" class="post-permalink" itemprop="url"><?php the_title(); ?></a></h2>
-							</header>
+							<? // markup for post snippet, used in loops and queries ?>
+							<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
 
-							<section class="event-excerpt">
-								<p itemprop="description"><?= get_the_excerpt(); ?></p>
-							</section>
+								<header class="event-title">
+									<h2 class="event-headline" itemprop="name"><a href="<?= get_permalink() ?>" title="<?php the_title(); ?>" class="post-permalink" itemprop="url"><?php the_title(); ?></a></h2>
+								</header>
 
-							<section class="event-detail">
+								<section class="event-excerpt">
+									<p itemprop="description"><?= get_the_excerpt(); ?></p>
+								</section>
 
-								<div class="table-responsive">
-								  <table class="table">
-								  	<?php if(get_field('date')) : ?>
-										<?php $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
-									    <tr>
-										    <td>Date</td>
-										    <td><?= $date->format('d-m-Y'); ?></td>
-									    </tr>
-  									<? endif; ?>
-								  	<?php if(get_field('time')) : ?>
-									    <tr>
-										    <td>Time</td>
-										    <td><?php the_field('time') ?></td>
-									    </tr>
-									<? endif; ?>
-								  	<?php if(get_field('venue_name')) : ?>
-									    <tr>
-										    <td>Venue</td>
-										    <td><?php the_field('venue_name') ?></td>
-									    </tr>
-								    <? endif; ?>
-								  	<?php if(get_field('city')) : ?>
-									    <tr>
-										    <td>City</td>
-										    <td><?php the_field('city') ?></td>
-									    </tr>
-								    <? endif; ?>
-								  	<?php if(get_field('country')) : ?>
-									    <tr>
-										    <td>Country</td>
-										    <td><?php the_field('country') ?></td>
-									    </tr>
-								    <? endif; ?>
+								<section class="event-detail">
 
-								  </table>
-								</div>
-							</section>
+									<div class="table-responsive">
+									  <table class="table">
+									  	<?php if(get_field('date')) : ?>
+											<?php $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
+										    <tr>
+											    <td>Date</td>
+											    <td><?= $date->format('d-m-Y'); ?></td>
+										    </tr>
+	  									<? endif; ?>
+									  	<?php if(get_field('time')) : ?>
+										    <tr>
+											    <td>Time</td>
+											    <td><?php the_field('time') ?></td>
+										    </tr>
+										<? endif; ?>
+									  	<?php if(get_field('venue_name')) : ?>
+										    <tr>
+											    <td>Venue</td>
+											    <td><?php the_field('venue_name') ?></td>
+										    </tr>
+									    <? endif; ?>
+									  	<?php if(get_field('city')) : ?>
+										    <tr>
+											    <td>City</td>
+											    <td><?php the_field('city') ?></td>
+										    </tr>
+									    <? endif; ?>
+									  	<?php if(get_field('country')) : ?>
+										    <tr>
+											    <td>Country</td>
+											    <td><?php the_field('country') ?></td>
+										    </tr>
+									    <? endif; ?>
 
-							<footer class="event-footer">
-								<?php get_template_part('parts/meta/readmore'); ?>
-							</footer> <!-- end article footer -->
+									  </table>
+									</div>
+								</section>
 
-						</article>
-						<hr/>
+								<footer class="event-footer">
+									<?php get_template_part('parts/meta/readmore'); ?>
+								</footer> <!-- end article footer -->
 
+							</article>
+							<hr/>
+
+						<?php endif; ?>
 
 					<?php endwhile; ?>
 
