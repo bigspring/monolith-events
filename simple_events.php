@@ -4,7 +4,7 @@ Plugin Name: Simple Events
 Plugin URI: http://badgersaregreat.com
 Description: A simple events plugin with minimal styling.
 Version: 1.0
-Author: Simon P Miles
+Author: Simon P Miles / Dave Seaton
 Author URI: http://www.bigspring.co.uk
 License: GPL2
 */
@@ -38,7 +38,7 @@ function simple_events_setup() {
 	        'hierarchical' => true,
 	        'description' => 'Product custom post type',
 	        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-/* 	        'taxonomies' => array( 'post_tag' ),  */
+			// 'taxonomies' => array( 'post_tag' ),
 	        'public' => true,
 	        'show_ui' => true,
 	        'show_in_menu' => true,
@@ -338,14 +338,17 @@ function me_create_daily_event_check_schedule() {
 	//If $timestamp == false schedule daily backups since it hasn't been done previously
 	if( $timestamp == false ) {
 		//Schedule the event for right now, then to repeat daily using the hook 'me_create_daily_event_check'
-		wp_schedule_event( strtotime('today midnight'), 'daily', 'me_create_daily_event_check' );
+		wp_schedule_event( strtotime('midnight'), 'daily', 'me_create_daily_event_check' );
 	}
 }
 
-//Hook our function , wi_create_backup(), into the action me_create_daily_event_check
-add_action( 'me_create_daily_event_check', 'me_check_event_dates' );
+ 
+add_action( 'me_create_daily_event_check', 'me_check_event_datetime' );
 
-function me_check_event_dates() {
+/**
+* Collate event dates/times (grouped by id) and update 'date_passed' field if timestamp is before current time
+*/
+function me_check_event_datetime() {
 
 	global $wpdb;
 

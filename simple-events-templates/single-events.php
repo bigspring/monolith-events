@@ -116,6 +116,13 @@ $event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . ge
 							    </tr>
 						    <? endif; ?>
 
+						    <?php if(get_field('date_passed')) : ?>
+							    <tr>
+								    <td>Date Passed</td>
+								    <td><?php the_field('date_passed') ?></td>
+							    </tr>
+						    <? endif; ?>
+
 						  </table>
 						</div>
 					</section>
