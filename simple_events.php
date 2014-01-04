@@ -308,8 +308,6 @@ function my_theme_redirect() {
         }
         do_theme_redirect($return_template);
     }
-
-    me_check_event_dates();
 }
 
 function do_theme_redirect($url) {
