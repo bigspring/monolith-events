@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Simple Events
+Plugin Name: Monolith Events
 Plugin URI: http://badgersaregreat.com
-Description: A simple events plugin with minimal styling.
+Description: A simple events plugin with minimal styling for use with the Bigspring Monolith WP theme.
 Version: 1.0
 Author: Simon P Miles, Dave Seaton
 Author URI: http://www.bigspring.co.uk
@@ -10,13 +10,13 @@ License: GPL2
 */
 
 //process custom taxonomies if they exist
-add_action( 'init', 'simple_events_setup', 0 );
+add_action( 'init', 'monolith_events_setup', 0 );
 
 //fire up the ACF plugin
 define( 'ACF_LITE' , true );
 include_once('advanced-custom-fields/acf.php' );
 
-function simple_events_setup() {
+function monolith_events_setup() {
 
 	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
@@ -43,7 +43,7 @@ function simple_events_setup() {
 	        'show_ui' => true,
 	        'show_in_menu' => true,
 	        'menu_position' => 5,
-	        'menu_icon' => plugins_url() . '/simple-events/img/group.png',
+	        'menu_icon' => plugins_url() . '/monolith-events/img/group.png',
 
 
 	        'show_in_nav_menus' => true,
@@ -264,7 +264,7 @@ function simple_events_setup() {
 		));
 	}
 
-}//end simple_events_setup
+}//end monolith_events_setup
 
 //Template fallback
 add_action("template_redirect", 'my_theme_redirect');
@@ -281,7 +281,7 @@ function my_theme_redirect() {
 	        if (file_exists($themepath . '/' . $templatefilename)) {
 	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
-	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
+	            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
 
@@ -292,7 +292,7 @@ function my_theme_redirect() {
 	        if (file_exists($themepath . '/' . $templatefilename)) {
 	            $return_template = $themepath . '/' . $templatefilename;
 	        } else {
-	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
+	            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
 
@@ -304,7 +304,7 @@ function my_theme_redirect() {
         if (file_exists($themepath . '/' . $templatefilename)) {
             $return_template = $themepath . '/' . $templatefilename;
         } else {
-            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
+            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
         }
         do_theme_redirect($return_template);
     }
@@ -348,8 +348,8 @@ register_deactivation_hook( __FILE__, 'me_remove_daily_event_check_schedule' );
 function me_remove_daily_event_check_schedule(){
   wp_clear_scheduled_hook( 'me_create_daily_event_check' );
 }
- 
- 
+
+
 add_action( 'me_create_daily_event_check', 'me_check_event_datetime' );
 
 /**
@@ -391,15 +391,15 @@ function me_check_event_datetime() {
 // GMAPS STUFF
 // -------------------------------------------------------------------------------------------------------
 
-add_action('wp_enqueue_scripts', 'load_simple_event_scripts');
+add_action('wp_enqueue_scripts', 'load_monolith_event_scripts');
 
 /**
  * Add gmaps dependencies
  */
-function load_simple_event_scripts() {
+function load_monolith_event_scripts() {
 
 	if(is_singular('events')) {
 		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
-		wp_enqueue_script('gmapsjs', plugins_url('simple-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
+		wp_enqueue_script('gmapsjs', plugins_url('monolith-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
 	}
 }
