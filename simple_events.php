@@ -329,7 +329,7 @@ function do_theme_redirect($url) {
 register_activation_hook( __FILE__, 'me_create_daily_event_check_schedule' );
 
 /**
-* Schedule a daily event check (00:00) upon plugin registration
+* Schedule daily event check (00:00) upon plugin activation
 */
 function me_create_daily_event_check_schedule() {
 	//Use wp_next_scheduled to check if the event is already scheduled
@@ -342,8 +342,18 @@ function me_create_daily_event_check_schedule() {
 	}
 }
 
+
+register_deactivation_hook( __FILE__, 'me_remove_daily_event_check_schedule' );
+
+/**
+* Unschedule daily event check (00:00) upon plugin deactivation
+*/
+function me_remove_daily_event_check_schedule(){
+  wp_clear_scheduled_hook( 'me_create_daily_event_check' );
+}
  
 add_action( 'me_create_daily_event_check', 'me_check_event_datetime' );
+
 
 /**
 * Collate event dates/times (grouped by id) and update 'date_passed' field if timestamp is before current time
@@ -377,6 +387,7 @@ function me_check_event_datetime() {
 		}
 	}
 }
+
 
 // -------------------------------------------------------------------------------------------------------
 // GMAPS STUFF
