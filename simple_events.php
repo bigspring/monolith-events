@@ -4,7 +4,7 @@ Plugin Name: Simple Events
 Plugin URI: http://badgersaregreat.com
 Description: A simple events plugin with minimal styling.
 Version: 1.0
-Author: Simon P Miles / Dave Seaton
+Author: Simon P Miles, Dave Seaton
 Author URI: http://www.bigspring.co.uk
 License: GPL2
 */
@@ -18,7 +18,7 @@ include_once('advanced-custom-fields/acf.php' );
 
 function simple_events_setup() {
 
-	    $labels = array( 
+	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
 	        'singular_name' => _x( 'Event', 'events' ),
 	        'add_new' => _x( 'Add New', 'events' ),
@@ -32,8 +32,8 @@ function simple_events_setup() {
 	        'parent_item_colon' => _x( 'Parent Event:', 'events' ),
 	        'menu_name' => _x( 'Events', 'event' ),
 	    );
-	
-	    $args = array( 
+
+	    $args = array(
 	        'labels' => $labels,
 	        'hierarchical' => true,
 	        'description' => 'Product custom post type',
@@ -44,8 +44,8 @@ function simple_events_setup() {
 	        'show_in_menu' => true,
 	        'menu_position' => 5,
 	        'menu_icon' => plugins_url() . '/simple-events/img/group.png',
-	
-	        
+
+
 	        'show_in_nav_menus' => true,
 	        'publicly_queryable' => true,
 	        'exclude_from_search' => false,
@@ -55,16 +55,16 @@ function simple_events_setup() {
 	        'rewrite' => true,
 	        'capability_type' => 'post'
 	    );
-	
+
 	    register_post_type( 'events', $args );
-	    
-	    
-	    
+
+
+
 	    //register the events category taxonomy
 		register_taxonomy('event_categories',array (
 		  0 => 'events',
-		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );	    
-	    
+		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );
+
 	/**
 	 *  Register Field Groups
 	 *
@@ -284,7 +284,7 @@ function my_theme_redirect() {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
-        
+
     //Archive event view
     } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
 
@@ -295,7 +295,7 @@ function my_theme_redirect() {
 	            $return_template = $plugindir . '/simple-events-templates/' . $templatefilename;
 	        }
         do_theme_redirect($return_template);
-        
+
 
     //Taxonomy Page
     } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
@@ -358,7 +358,7 @@ function me_check_event_datetime() {
 	$events_cons = array();
 
 	foreach ($datetime_events as $post_meta => $post_meta_value) {
-		
+
 		if (!array_key_exists($post_meta_value['post_id'], $events_cons)) {
 			$events_cons[$post_meta_value['post_id']] = array();
 		}
@@ -368,7 +368,7 @@ function me_check_event_datetime() {
 
 	// check whether the date has passed and update date_passed field(s) accordingly
 	foreach ($events_cons as $event_id => $datetime_values) {
-		
+
 		$datetime = $datetime_values['date'] . ' ' . $datetime_values['time'] . ':00';
 
 		if ((time() - strtotime($datetime)) > 0) {
@@ -388,7 +388,7 @@ add_action('wp_enqueue_scripts', 'load_simple_event_scripts');
  * Add gmaps dependencies
  */
 function load_simple_event_scripts() {
-		
+
 	if(is_singular('events')) {
 		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
 		wp_enqueue_script('gmapsjs', plugins_url('simple-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
