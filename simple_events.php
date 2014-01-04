@@ -342,7 +342,6 @@ function me_create_daily_event_check_schedule() {
 	}
 }
 
-
 register_deactivation_hook( __FILE__, 'me_remove_daily_event_check_schedule' );
 
 /**
@@ -352,8 +351,8 @@ function me_remove_daily_event_check_schedule(){
   wp_clear_scheduled_hook( 'me_create_daily_event_check' );
 }
  
+ 
 add_action( 'me_create_daily_event_check', 'me_check_event_datetime' );
-
 
 /**
 * Collate event dates/times (grouped by id) and update 'date_passed' field if timestamp is before current time
@@ -362,11 +361,12 @@ function me_check_event_datetime() {
 
 	global $wpdb;
 
+	// retrieve date/time postmeta data from all events
 	$datetime_events = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'date' OR meta_key = 'time'", ARRAY_A);
 
-	// consolidate date/time pairs
 	$events_cons = array();
 
+	// consolidate each date/time pair under common event
 	foreach ($datetime_events as $post_meta => $post_meta_value) {
 
 		if (!array_key_exists($post_meta_value['post_id'], $events_cons)) {
