@@ -27,7 +27,7 @@
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 
-						<?php if (the_field('date_passed') == 0) ?>
+						<?php if (the_field('date_passed') == 0) : ?>
 
 							<? // markup for post snippet, used in loops and queries ?>
 							<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
