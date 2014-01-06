@@ -360,7 +360,7 @@ class MonolithCronScheduler
 		register_deactivation_hook( __FILE__, array($this, 'remove_daily_event_check_schedule'));
 
 		// event check hook
-		add_action('daily_event_check', array($this, 'check_event_datetime'));
+		add_action('me_daily_event_check', array($this, 'check_event_datetime'));
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
@@ -373,13 +373,13 @@ class MonolithCronScheduler
 	public function create_daily_event_check_schedule() {
 
 		// Use wp_next_scheduled to check if the event is already scheduled
-		$timestamp = wp_next_scheduled('daily_event_check');
+		$timestamp = wp_next_scheduled('me_daily_event_check');
 
 		// If $timestamp == false schedule daily backups since it hasn't been done previously
 		if ($timestamp == false) {
 
-			// Schedule the event to repeat midnightly using the hook 'daily_event_check'
-			wp_schedule_event(strtotime('midnight'), 'daily', 'daily_event_check');
+			// Schedule the event to repeat midnightly using the hook 'me_daily_event_check'
+			wp_schedule_event(strtotime('midnight'), 'daily', 'me_daily_event_check');
 		}
 	}
 
@@ -388,7 +388,7 @@ class MonolithCronScheduler
 	*/
 	public function remove_daily_event_check_schedule() {
 
-	 	wp_clear_scheduled_hook('daily_event_check');
+	 	wp_clear_scheduled_hook('me_daily_event_check');
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
