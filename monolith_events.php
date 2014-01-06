@@ -9,14 +9,26 @@ Author URI: http://www.bigspring.co.uk
 License: GPL2
 */
 
-//process custom taxonomies if they exist
-add_action( 'init', 'monolith_events_setup', 0 );
+class MonolithEvents
+{
+	public function __construct() {
 
-//fire up the ACF plugin
-define( 'ACF_LITE' , true );
-include_once('advanced-custom-fields/acf.php' );
+		// init acf/plugin prerequisites
+ 		define( 'ACF_LITE' , true );
+ 		include_once('advanced-custom-fields/acf.php' );
+ 		add_action('init', array($this, 'monolith_events_setup'), 0);
+ 		add_action("template_redirect", array($this, 'me_theme_redirect'));
+ 		add_action('wp_enqueue_scripts', array($this, 'load_event_scripts'));
+ 	}
 
-function monolith_events_setup() {
+	///////////////////////////////////////////////////////////////////////////////////
+	// PLUGIN/ACF INITIALISATION
+	///////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	* 
+	*/
+	public function monolith_events_setup() {
 
 	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
@@ -58,348 +70,371 @@ function monolith_events_setup() {
 
 	    register_post_type( 'events', $args );
 
-
-
-	    //register the events category taxonomy
+		//register the events category taxonomy
 		register_taxonomy('event_categories',array (
 		  0 => 'events',
 		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );
+	
 
-	/**
-	 *  Register Field Groups
-	 *
-	 *  The register_field_group function accepts 1 array which holds the relevant data to register a field group
-	 *  You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
-	 */
+		/**
+		 *  Register Field Groups
+		 *
+		 *  The register_field_group function accepts 1 array which holds the relevant data to register a field group
+		 *  You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
+		 */
+		if (function_exists("register_field_group")) {
 
-	if(function_exists("register_field_group"))
-	{
-		register_field_group(array (
-			'id' => 'acf_event-details',
-			'title' => 'Event Details',
-			'fields' => array (
-				array (
-					'key' => 'field_5200e14facb1f',
-					'label' => 'Date',
-					'name' => 'date',
-					'type' => 'date_picker',
-					'date_format' => 'yymmdd',
-					'display_format' => 'dd/mm/yy',
-					'first_day' => 1,
-				),
-				array (
-					'key' => 'field_5200e169acb20',
-					'label' => 'Time',
-					'name' => 'time',
-					'type' => 'text',
-					'instructions' => 'Use the 24h clock',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e19aacb21',
-					'label' => 'Venue Name',
-					'name' => 'venue_name',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e1b0acb22',
-					'label' => 'Address One',
-					'name' => 'address_one',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-							array (
-					'key' => 'field_5200e1b0acb30',
-					'label' => 'Address Two',
-					'name' => 'address_two',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e1b0acb31',
-					'label' => 'Address Three',
-					'name' => 'address_three',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-
-				array (
-					'key' => 'field_5200e1c3acb23',
-					'label' => 'City',
-					'name' => 'city',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e1d0acb24',
-					'label' => 'Post Code',
-					'name' => 'post_code',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e1e3acb25',
-					'label' => 'Country',
-					'name' => 'country',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e1f4acb26',
-					'label' => 'Cost',
-					'name' => 'cost',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e211acb27',
-					'label' => 'Facebook Link',
-					'name' => 'facebook_link',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e221acb28',
-					'label' => 'Website Link',
-					'name' => 'website_link',
-					'type' => 'text',
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-				array (
-					'key' => 'field_5200e221acb29',
-					'label' => 'Date Passed',
-					'name' => 'date_passed',
-					'type' => 'text',
-					'default_value' => '0',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'formatting' => 'none',
-					'maxlength' => '',
-				),
-			),
-			'location' => array (
-				array (
+			register_field_group(array (
+				'id' => 'acf_event-details',
+				'title' => 'Event Details',
+				'fields' => array (
 					array (
-						'param' => 'post_type',
-						'operator' => '==',
-						'value' => 'events',
-						'order_no' => 0,
-						'group_no' => 0,
+						'key' => 'field_5200e14facb1f',
+						'label' => 'Date',
+						'name' => 'date',
+						'type' => 'date_picker',
+						'date_format' => 'yymmdd',
+						'display_format' => 'dd/mm/yy',
+						'first_day' => 1,
+					),
+					array (
+						'key' => 'field_5200e169acb20',
+						'label' => 'Time',
+						'name' => 'time',
+						'type' => 'text',
+						'instructions' => 'Use the 24h clock',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e19aacb21',
+						'label' => 'Venue Name',
+						'name' => 'venue_name',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e1b0acb22',
+						'label' => 'Address One',
+						'name' => 'address_one',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+								array (
+						'key' => 'field_5200e1b0acb30',
+						'label' => 'Address Two',
+						'name' => 'address_two',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e1b0acb31',
+						'label' => 'Address Three',
+						'name' => 'address_three',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+
+					array (
+						'key' => 'field_5200e1c3acb23',
+						'label' => 'City',
+						'name' => 'city',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e1d0acb24',
+						'label' => 'Post Code',
+						'name' => 'post_code',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e1e3acb25',
+						'label' => 'Country',
+						'name' => 'country',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e1f4acb26',
+						'label' => 'Cost',
+						'name' => 'cost',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e211acb27',
+						'label' => 'Facebook Link',
+						'name' => 'facebook_link',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e221acb28',
+						'label' => 'Website Link',
+						'name' => 'website_link',
+						'type' => 'text',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_5200e221acb29',
+						'label' => 'Date Passed',
+						'name' => 'date_passed',
+						'type' => 'text',
+						'default_value' => '0',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'none',
+						'maxlength' => '',
 					),
 				),
-			),
-			'options' => array (
-				'position' => 'normal',
-				'layout' => 'default',
-				'hide_on_screen' => array (
-					0 => 'custom_fields',
-					1 => 'discussion',
-					2 => 'comments',
-					3 => 'slug',
-					4 => 'author',
-					5 => 'format',
-					6 => 'categories',
-					7 => 'tags',
-					8 => 'send-trackbacks',
+				'location' => array (
+					array (
+						array (
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => 'events',
+							'order_no' => 0,
+							'group_no' => 0,
+						),
+					),
 				),
-			),
-			'menu_order' => 1,
-		));
-	}
-
-}//end monolith_events_setup
-
-//Template fallback
-add_action("template_redirect", 'my_theme_redirect');
-
-function my_theme_redirect() {
-    global $wp;
-    $plugindir = dirname( __FILE__ );
-	$themepath = get_template_directory();
-
-    //Single event view
-    if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
-
-	        $templatefilename = 'single-events.php';
-	        if (file_exists($themepath . '/' . $templatefilename)) {
-	            $return_template = $themepath . '/' . $templatefilename;
-	        } else {
-	            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
-	        }
-        do_theme_redirect($return_template);
-
-    //Archive event view
-    } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
-
-	        $templatefilename = 'archive-events.php';
-	        if (file_exists($themepath . '/' . $templatefilename)) {
-	            $return_template = $themepath . '/' . $templatefilename;
-	        } else {
-	            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
-	        }
-        do_theme_redirect($return_template);
-
-
-    //Taxonomy Page
-    } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
-
-        $templatefilename = 'taxonomy-events_categories.php';
-        if (file_exists($themepath . '/' . $templatefilename)) {
-            $return_template = $themepath . '/' . $templatefilename;
-        } else {
-            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
-        }
-        do_theme_redirect($return_template);
-    }
-}
-
-function do_theme_redirect($url) {
-    global $post, $wp_query;
-    if (have_posts()) {
-        include($url);
-        die();
-    } else {
-        $wp_query->is_404 = true;
-    }
-}
-
-// -------------------------------------------------------------------------------------------------------
-// CRON STUFF
-// -------------------------------------------------------------------------------------------------------
-
-register_activation_hook( __FILE__, 'me_create_daily_event_check_schedule' );
-
-/**
-* Schedule daily event check (00:00) upon plugin activation
-*/
-function me_create_daily_event_check_schedule() {
-	//Use wp_next_scheduled to check if the event is already scheduled
-	$timestamp = wp_next_scheduled( 'me_create_daily_event_check' );
-
-	//If $timestamp == false schedule daily backups since it hasn't been done previously
-	if( $timestamp == false ) {
-		//Schedule the event for right now, then to repeat daily using the hook 'me_create_daily_event_check'
-		wp_schedule_event( strtotime('midnight'), 'daily', 'me_create_daily_event_check' );
-	}
-}
-
-register_deactivation_hook( __FILE__, 'me_remove_daily_event_check_schedule' );
-
-/**
-* Unschedule daily event check (00:00) upon plugin deactivation
-*/
-function me_remove_daily_event_check_schedule(){
-  wp_clear_scheduled_hook( 'me_create_daily_event_check' );
-}
-
-
-add_action( 'me_create_daily_event_check', 'me_check_event_datetime' );
-
-/**
-* Collate event dates/times (grouped by id) and update 'date_passed' field if timestamp is before current time
-*/
-function me_check_event_datetime() {
-
-	global $wpdb;
-
-	// retrieve date/time postmeta data from all events
-	$datetime_events = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'date' OR meta_key = 'time'", ARRAY_A);
-
-	$events_cons = array();
-
-	// consolidate each date/time pair under common event
-	foreach ($datetime_events as $post_meta => $post_meta_value) {
-
-		if (!array_key_exists($post_meta_value['post_id'], $events_cons)) {
-			$events_cons[$post_meta_value['post_id']] = array();
+				'options' => array (
+					'position' => 'normal',
+					'layout' => 'default',
+					'hide_on_screen' => array (
+						0 => 'custom_fields',
+						1 => 'discussion',
+						2 => 'comments',
+						3 => 'slug',
+						4 => 'author',
+						5 => 'format',
+						6 => 'categories',
+						7 => 'tags',
+						8 => 'send-trackbacks',
+					),
+				),
+				'menu_order' => 1,
+			));
 		}
+	} // end monolith_events_setup
 
-		$events_cons[$post_meta_value['post_id']][$post_meta_value['meta_key']] = $post_meta_value['meta_value'];
+	///////////////////////////////////////////////////////////////////////////////////
+	// TEMPLATE FALLBACK
+	///////////////////////////////////////////////////////////////////////////////////
+
+	public function me_theme_redirect() {
+
+	    global $wp;
+	    $plugindir = dirname( __FILE__ );
+		$themepath = get_template_directory();
+
+	    //Single event view
+	    if ($wp->query_vars["post_type"] == 'events' && is_singular('events')) {
+
+		        $templatefilename = 'single-events.php';
+		        if (file_exists($themepath . '/' . $templatefilename)) {
+		            $return_template = $themepath . '/' . $templatefilename;
+		        } else {
+		            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
+		        }
+	        $this->do_theme_redirect($return_template);
+
+	    //Archive event view
+	    } elseif ($wp->query_vars["post_type"] == 'events' && is_post_type_archive('events')) {
+
+		        $templatefilename = 'archive-events.php';
+		        if (file_exists($themepath . '/' . $templatefilename)) {
+		            $return_template = $themepath . '/' . $templatefilename;
+		        } else {
+		            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
+		        }
+	        $this->do_theme_redirect($return_template);
+
+	    //Taxonomy Page
+	    } elseif ($wp->query_vars["taxonomy"] == 'events_categories') {
+
+	        $templatefilename = 'taxonomy-events_categories.php';
+	        if (file_exists($themepath . '/' . $templatefilename)) {
+	            $return_template = $themepath . '/' . $templatefilename;
+	        } else {
+	            $return_template = $plugindir . '/monolith-events-templates/' . $templatefilename;
+			}
+			$this->do_theme_redirect($return_template);
+		}
 	}
 
-	// check whether the date has passed and update date_passed field(s) accordingly
-	foreach ($events_cons as $event_id => $datetime_values) {
+	public function do_theme_redirect($url) {
 
-		$datetime = $datetime_values['date'] . ' ' . $datetime_values['time'] . ':00';
+		global $post, $wp_query;
 
-		if ((time() - strtotime($datetime)) > 0) {
+		if (have_posts()) {
 
-			$wpdb->update($wpdb->postmeta, array('meta_value' => '1'), array('post_id' => $event_id, 'meta_key' => 'date_passed'));
+			include($url);
+			die();
+		} else {
+
+			$wp_query->is_404 = true;
+		}
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+	// GMAPS
+	///////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * Add gmaps dependencies
+	 */
+	public function load_event_scripts() {
+
+		if(is_singular('events')) {
+			wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
+			wp_enqueue_script('gmapsjs', plugins_url('monolith-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
 		}
 	}
 }
 
 
-// -------------------------------------------------------------------------------------------------------
-// GMAPS STUFF
-// -------------------------------------------------------------------------------------------------------
+class MonolithCronScheduler
+{
+	public function __construct() {
 
-add_action('wp_enqueue_scripts', 'load_monolith_event_scripts');
+		// plugin activation status
+		register_activation_hook( __FILE__, array($this, 'create_daily_event_check_schedule'));
+		register_deactivation_hook( __FILE__, array($this, 'remove_daily_event_check_schedule'));
 
-/**
- * Add gmaps dependencies
- */
-function load_monolith_event_scripts() {
+		// event check hook
+		add_action('daily_event_check', array($this, 'check_event_datetime'));
+	}
 
-	if(is_singular('events')) {
-		wp_enqueue_script('gmapsapi', 'http://maps.google.com/maps/api/js?sensor=true', array('jquery'));
-		wp_enqueue_script('gmapsjs', plugins_url('monolith-events/assets/gmaps.js'), array('jquery', 'gmapsapi'));
+	///////////////////////////////////////////////////////////////////////////////////
+	// SCHEDULE REGISTRATION
+	///////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	* Schedule daily event check (00:00) upon plugin activation
+	*/
+	public function create_daily_event_check_schedule() {
+
+		// Use wp_next_scheduled to check if the event is already scheduled
+		$timestamp = wp_next_scheduled('daily_event_check');
+
+		// If $timestamp == false schedule daily backups since it hasn't been done previously
+		if ($timestamp == false) {
+
+			// Schedule the event to repeat midnightly using the hook 'daily_event_check'
+			wp_schedule_event(strtotime('midnight'), 'daily', 'daily_event_check');
+		}
+	}
+
+	/**
+	* Cancel daily event check upon plugin deactivation
+	*/
+	public function remove_daily_event_check_schedule() {
+
+	 	wp_clear_scheduled_hook('daily_event_check');
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+	// EVENT CHECK
+	///////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	* Collate event dates/times (grouped by id) and update 'date_passed' field if timestamp is before current time
+	*
+	* TODO: look into accessing post_data table directly, this is very much a proof of concept
+	* TODO: consider alternative methods for filtering datetime
+	*/
+	public function check_event_datetime() {
+
+		global $wpdb;
+
+		// retrieve date/time postmeta data from all events
+		$datetime_events = $wpdb->get_results("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'date' OR meta_key = 'time'", ARRAY_A);
+
+		$events_cons = array();
+
+		// consolidate each date/time pair under common event
+		foreach ($datetime_events as $post_meta => $post_meta_value) {
+
+			if (!array_key_exists($post_meta_value['post_id'], $events_cons)) {
+				$events_cons[$post_meta_value['post_id']] = array();
+			}
+
+			// store data in multidimensional array in format $events_cons[event post id]['date/time'] = date/time value
+			$events_cons[$post_meta_value['post_id']][$post_meta_value['meta_key']] = $post_meta_value['meta_value'];
+		}
+
+		// check whether the date has passed and update date_passed field(s) accordingly
+		foreach ($events_cons as $event_id => $datetime_values) {
+
+			$datetime = $datetime_values['date'] . ' ' . $datetime_values['time'] . ':00';
+
+			if ((time() - strtotime($datetime)) > 0) {
+
+				$wpdb->update($wpdb->postmeta, array('meta_value' => '1'), array('post_id' => $event_id, 'meta_key' => 'date_passed'));
+			}
+		}
 	}
 }
+
+
+// instantiate bro
+$mcs = new MonolithCronScheduler();
+$me = new MonolithEvents();
