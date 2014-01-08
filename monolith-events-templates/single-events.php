@@ -7,7 +7,7 @@
 
 $event_venue = get_field('venue_name');
 $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
-//dump($event_address); die;
+$event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . get_field('post_code');
 ?>
 
 <?php get_header() ?>
@@ -44,80 +44,90 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 					<div class="event-detail panel panel-default">
 
 						<table class="table">
+					<section class="event-detail">
+
+						<div class="table-responsive">
+						  <table class="table">
 
 						  	<?php if(get_field('date')) : ?>
-						    <tr>
-							    <td>Date</td>
-							    <td><?php the_field('date') ?></td>
-						    </tr>
-								<? endif; ?>
+								<?php $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
+							    <tr>
+								    <td>Date</td>
+								    <td><?= $date->format('d-m-Y'); ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('time')) : ?>
 						    <tr>
 							    <td>Time</td>
 							    <td><?php the_field('time') ?></td>
 						    </tr>
 						  <? endif; ?>
+							    <tr>
+								    <td>Time</td>
+								    <td><?php the_field('time') ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('venue_name')) : ?>
-						    <tr>
-							    <td>Venue</td>
-							    <td><?php the_field('venue_name') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Venue</td>
+								    <td><?php the_field('venue_name') ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('address_one')) : ?>
-						    <tr>
-							    <td>Address One</td>
-							    <td><?php the_field('address_one') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Address One</td>
+								    <td><?php the_field('address_one') ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('address_two')) : ?>
-						    <tr>
-							    <td>Address Two</td>
-							    <td><?php the_field('address_two') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Address Two</td>
+								    <td><?php the_field('address_two') ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('address_three')) : ?>
-						    <tr>
-							    <td>Address Three</td>
-							    <td><?php the_field('address_three') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Address Three</td>
+								    <td><?php the_field('address_three') ?></td>
+							    </tr>
+							<? endif; ?>
 						  	<?php if(get_field('city')) : ?>
-						    <tr>
-							    <td>City</td>
-							    <td><?php the_field('city') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>City</td>
+								    <td><?php the_field('city') ?></td>
+							    </tr>
+						    <? endif; ?>
 						  	<?php if(get_field('post_code')) : ?>
-						    <tr>
-							    <td>Post Code</td>
-							    <td><?php the_field('post_code') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Post Code</td>
+								    <td><?php the_field('post_code') ?></td>
+							    </tr>
+						    <? endif; ?>
 						  	<?php if(get_field('country')) : ?>
-						    <tr>
-							    <td>Country</td>
-							    <td><?php the_field('country') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Country</td>
+								    <td><?php the_field('country') ?></td>
+							    </tr>
+						    <? endif; ?>
 						  	<?php if(get_field('cost')) : ?>
-						    <tr>
-							    <td>Cost</td>
-							    <td><?php the_field('cost') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Cost</td>
+								    <td><?php the_field('cost') ?></td>
+							    </tr>
+						    <? endif; ?>
 						  	<?php if(get_field('facebook_link')) : ?>
-						    <tr>
-							    <td>Facebook</td>
-							    <td><?php the_field('facebook_link') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Facebook</td>
+								    <td><?php the_field('facebook_link') ?></td>
+							    </tr>
+						    <? endif; ?>
 
 						  	<?php if(get_field('website_link')) : ?>
-						    <tr>
-							    <td>Website</td>
-							    <td><?php the_field('website_link') ?></td>
-						    </tr>
-						  <? endif; ?>
+							    <tr>
+								    <td>Website</td>
+								    <td><?php the_field('website_link') ?></td>
+							    </tr>
+						    <? endif; ?>
 
 						  	<?php if(get_field('google_maps_link')) : ?>
 						    <tr>
@@ -132,6 +142,7 @@ $event_address = get_field('venue_name') . ', ' . get_field('address_one') . ', 
 					</section>
 
 					<section class="event-content" itemprop="articleBody">
+						<?php the_content(); ?>
 						<div id="map_container"></div>
 					</section>
 
