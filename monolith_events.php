@@ -13,9 +13,15 @@ class MonolithEvents
 {
 	public function __construct() {
 
-		// init acf/plugin prerequisites
- 		define( 'ACF_LITE' , true );
- 		include_once('advanced-custom-fields/acf.php' );
+		//some pimping checks to see if we have ACF installed and if not use our bundled copy, coz that's how we roll
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		if ( !is_plugin_active( 'advanced-custom-fields/acf.php' ) ) {
+			// init acf/plugin prerequisites
+	 		define( 'ACF_LITE' , true );
+	 		include_once('advanced-custom-fields/acf.php' );
+ 		}
+ 		
+ 		
  		add_action('init', array($this, 'monolith_events_setup'), 0);
  		add_action("template_redirect", array($this, 'me_theme_redirect'));
  		add_action('wp_enqueue_scripts', array($this, 'load_event_scripts'));
@@ -29,6 +35,18 @@ class MonolithEvents
 	* 
 	*/
 	public function monolith_events_setup() {
+	
+	
+		function monolith_events_admin_icon() //change the event icon to the new cool dashicon ones :)
+		{
+		echo '
+		<style>
+		#adminmenu #menu-posts-events div.wp-menu-image:before { content: "\f163"; }
+		</style>
+		';
+		}
+		add_action( 'admin_head', 'monolith_events_admin_icon' );
+	
 
 	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
@@ -49,13 +67,12 @@ class MonolithEvents
 	        'labels' => $labels,
 	        'hierarchical' => true,
 	        'description' => 'Product custom post type',
-	        'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
-			// 'taxonomies' => array( 'post_tag' ),
+	        'supports' => array( 'title', 'editor', 'excerpt', 'page-attributes'),
+			//'taxonomies' => array(),
 	        'public' => true,
 	        'show_ui' => true,
 	        'show_in_menu' => true,
 	        'menu_position' => 5,
-	        'menu_icon' => plugins_url() . '/monolith-events/img/group.png',
 
 
 	        'show_in_nav_menus' => true,
@@ -64,7 +81,7 @@ class MonolithEvents
 	        'has_archive' => true,
 	        'query_var' => true,
 	        'can_export' => true,
-	        'rewrite' => true,
+	        //'rewrite'    => array( 'slug' => 'event' ),
 	        'capability_type' => 'post'
 	    );
 
@@ -73,7 +90,7 @@ class MonolithEvents
 		//register the events category taxonomy
 		register_taxonomy('event_categories',array (
 		  0 => 'events',
-		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => ''),'singular_label' => 'Event Category') );
+		),array( 'hierarchical' => true,'label' => 'Event Categories','show_ui' => true,'query_var' => true,'rewrite' => array('slug' => 'events'),'singular_label' => 'Event Category') );
 	
 
 		/**
@@ -89,8 +106,18 @@ class MonolithEvents
 				'title' => 'Event Details',
 				'fields' => array (
 					array (
+						'key' => 'field_5200e221acb30',
+						'label' => 'Start Date',
+						'name' => 'start_date',
+						'type' => 'date_picker',
+						'instructions' => 'If this is a single day event then set the start and end date to be the same.',
+						'date_format' => 'yymmdd',
+						'display_format' => 'dd/mm/yy',
+						'first_day' => 1,
+					),
+					array (
 						'key' => 'field_5200e14facb1f',
-						'label' => 'Date',
+						'label' => 'End Date',
 						'name' => 'date',
 						'type' => 'date_picker',
 						'date_format' => 'yymmdd',
@@ -231,18 +258,7 @@ class MonolithEvents
 						'formatting' => 'none',
 						'maxlength' => '',
 					),
-					array (
-						'key' => 'field_5200e221acb29',
-						'label' => 'Date Passed',
-						'name' => 'date_passed',
-						'type' => 'text',
-						'default_value' => '0',
-						'placeholder' => '',
-						'prepend' => '',
-						'append' => '',
-						'formatting' => 'none',
-						'maxlength' => '',
-					),
+				
 				),
 				'location' => array (
 					array (
@@ -266,7 +282,7 @@ class MonolithEvents
 						4 => 'author',
 						5 => 'format',
 						6 => 'categories',
-						7 => 'tags',
+						//7 => 'tags',
 						8 => 'send-trackbacks',
 					),
 				),
@@ -354,7 +370,7 @@ class MonolithEvents
 class MonolithCronScheduler
 {
 	public function __construct() {
-
+//print_r(_get_cron_array()); print_r(date('Y-m-d G:i:s', 1390003200)); die();
 		// plugin activation status
 		register_activation_hook( __FILE__, array($this, 'create_daily_event_check_schedule'));
 		register_deactivation_hook( __FILE__, array($this, 'remove_daily_event_check_schedule'));

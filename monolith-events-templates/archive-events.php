@@ -8,6 +8,27 @@
 
 <?php get_header() ?>
 
+<?php
+$today = date('Ymd');
+
+$args = array(
+	'post_type' => 'events',
+	'posts_per_page' => -1,
+	'order' => 'ASC',
+	'orderby' => 'meta_value_num',
+	'meta_key' => 'date',
+	'meta_query' => array(
+		array(
+			 'key' => 'date',
+             'value' => $today,
+             'compare' => '>='
+		)
+	)
+);
+
+query_posts($args); ?>
+
+
 <div class="wrapper-main" role="main">
 
 	<div class="<?= CONTAINER_CLASSES; ?>">
@@ -27,7 +48,6 @@
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
 
-						<?php if (get_field('date_passed') == 0) : ?>
 
 							<? // markup for post snippet, used in loops and queries ?>
 							<article itemscope itemtype="http://schema.org/Event" <?php post_class(); ?>>
@@ -42,42 +62,42 @@
 
 								<section class="event-detail">
 
-									<div class="table-responsive">
-									  <table class="table">
-									  	<?php if(get_field('date')) : ?>
-											<?php $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
-										    <tr>
-											    <td>Date</td>
-											    <td><?= $date->format('d-m-Y'); ?></td>
-										    </tr>
-	  									<? endif; ?>
-									  	<?php if(get_field('time')) : ?>
-										    <tr>
-											    <td>Time</td>
-											    <td><?php the_field('time') ?></td>
-										    </tr>
-										<? endif; ?>
-									  	<?php if(get_field('venue_name')) : ?>
-										    <tr>
-											    <td>Venue</td>
-											    <td><?php the_field('venue_name') ?></td>
-										    </tr>
-									    <? endif; ?>
-									  	<?php if(get_field('city')) : ?>
-										    <tr>
-											    <td>City</td>
-											    <td><?php the_field('city') ?></td>
-										    </tr>
-									    <? endif; ?>
-									  	<?php if(get_field('country')) : ?>
-										    <tr>
-											    <td>Country</td>
-											    <td><?php the_field('country') ?></td>
-										    </tr>
-									    <? endif; ?>
+									<? // See if we have dates to play with and if we do make them the correct date format ?>
+									<?php if(get_field('start_date')) : ?>
+										<? $start_date = DateTime::createFromFormat('Ymd', get_field('start_date')); ?>
+									<?php endif; ?>
+									
+									<?php if(get_field('date')) : ?>
+										<? $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
+									<?php endif; ?>
+									
+									<? // if the event start and end date is the same or there is no start date just render the end date ?>
+									<?php if($start_date == $date || $start_date == 0) : ?>
+										<p class="event-date-detail"><?php echo $date->format('D, d F Y'); ?></p>
+										
+									<? // else if we have a start and end date (this is a multi day event) then render both dates ?>	
+									<?php else : ?>
+										<p class="event-date-detail"><?php echo $start_date->format('D, d F Y'); ?> - <?php echo $date->format('D, d F Y'); ?></p>
+									<?php endif; ?>
 
-									  </table>
-									</div>
+								  	<?php if(get_field('time')) : ?>
+									    <p><strong>Time</strong></p>
+									    <p><?php the_field('time') ?></p>
+									<? endif; ?>
+								  	<?php if(get_field('venue_name')) : ?>
+									    <p><strong>Venue</strong></p>
+									    <p><?php the_field('venue_name') ?></p>
+								    <? endif; ?>
+								  	<?php if(get_field('city')) : ?>
+									    <p><strong>City</strong></p>
+									    <p><?php the_field('city') ?></p>
+								    <? endif; ?>
+								  	<?php if(get_field('country')) : ?>
+									    <p><strong>Country</strong></p>
+									    <p><?php the_field('country') ?></p>
+								    <? endif; ?>
+
+
 								</section>
 
 								<footer class="event-footer">
@@ -87,7 +107,6 @@
 							</article>
 							<hr/>
 
-						<?php endif; ?>
 
 					<?php endwhile; ?>
 

@@ -198,13 +198,6 @@ class acf_field_image extends acf_field
 	
 	function format_value_for_api( $value, $post_id, $field )
 	{
-		// vars
-		$defaults = array(
-			'save_format'	=>	'url',
-		);
-		
-		$field = array_merge($defaults, $field);
-		
 		
 		// validate
 		if( !$value )
@@ -239,6 +232,7 @@ class acf_field_image extends acf_field
 				'title' => $attachment->post_title,
 				'caption' => $attachment->post_excerpt,
 				'description' => $attachment->post_content,
+				'mime_type'	=> $attachment->post_mime_type,
 				'url' => $src[0],
 				'width' => $src[1],
 				'height' => $src[2],
