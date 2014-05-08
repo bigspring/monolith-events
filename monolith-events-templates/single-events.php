@@ -41,106 +41,9 @@ $event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . ge
 					</section>
 
 
-					<div class="event-detail panel panel-default">
 
-						<table class="table">
 					<section class="event-detail">
 
-<<<<<<< HEAD
-						<div class="table-responsive">
-						  <table class="table">
-
-						  	<?php if(get_field('date')) : ?>
-								<?php $date = DateTime::createFromFormat('Ymd', get_field('date')); ?>
-							    <tr>
-								    <td>Date</td>
-								    <td><?= $date->format('d-m-Y'); ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('time')) : ?>
-						    <tr>
-							    <td>Time</td>
-							    <td><?php the_field('time') ?></td>
-						    </tr>
-						  <? endif; ?>
-							    <tr>
-								    <td>Time</td>
-								    <td><?php the_field('time') ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('venue_name')) : ?>
-							    <tr>
-								    <td>Venue</td>
-								    <td><?php the_field('venue_name') ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('address_one')) : ?>
-							    <tr>
-								    <td>Address One</td>
-								    <td><?php the_field('address_one') ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('address_two')) : ?>
-							    <tr>
-								    <td>Address Two</td>
-								    <td><?php the_field('address_two') ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('address_three')) : ?>
-							    <tr>
-								    <td>Address Three</td>
-								    <td><?php the_field('address_three') ?></td>
-							    </tr>
-							<? endif; ?>
-						  	<?php if(get_field('city')) : ?>
-							    <tr>
-								    <td>City</td>
-								    <td><?php the_field('city') ?></td>
-							    </tr>
-						    <? endif; ?>
-						  	<?php if(get_field('post_code')) : ?>
-							    <tr>
-								    <td>Post Code</td>
-								    <td><?php the_field('post_code') ?></td>
-							    </tr>
-						    <? endif; ?>
-						  	<?php if(get_field('country')) : ?>
-							    <tr>
-								    <td>Country</td>
-								    <td><?php the_field('country') ?></td>
-							    </tr>
-						    <? endif; ?>
-						  	<?php if(get_field('cost')) : ?>
-							    <tr>
-								    <td>Cost</td>
-								    <td><?php the_field('cost') ?></td>
-							    </tr>
-						    <? endif; ?>
-						  	<?php if(get_field('facebook_link')) : ?>
-							    <tr>
-								    <td>Facebook</td>
-								    <td><?php the_field('facebook_link') ?></td>
-							    </tr>
-						    <? endif; ?>
-
-						  	<?php if(get_field('website_link')) : ?>
-							    <tr>
-								    <td>Website</td>
-								    <td><?php the_field('website_link') ?></td>
-							    </tr>
-						    <? endif; ?>
-
-						  	<?php if(get_field('google_maps_link')) : ?>
-						    <tr>
-							    <td>Google Map</td>
-							    <td><?php the_field('google_maps_link') ?></td>
-						    </tr>
-						  <? endif; ?>
-
-
-						  </table>
-						</div>
-=======
 						<? // See if we have dates to play with and if we do make them the correct date format ?>
 						<?php if(get_field('start_date')) : ?>
 							<? $start_date = DateTime::createFromFormat('Ymd', get_field('start_date')); ?>
@@ -214,7 +117,6 @@ $event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . ge
 						    <p><?php the_field('website_link') ?></p>
 					    <? endif; ?>
 
->>>>>>> upgrades-fixes
 					</section>
 
 					<section class="event-content" itemprop="articleBody">
@@ -234,12 +136,8 @@ $event_address = get_field('address_one') . ', ' . get_field('city') . ', ' . ge
 
 </div><!-- /wrapper-main -->
 
-<<<<<<< HEAD
 <?php get_footer(); ?>
 
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri(); ?>/js/gmaps.js"></script>
-=======
->>>>>>> upgrades-fixes
 <script type="text/javascript">
 
 var map;
