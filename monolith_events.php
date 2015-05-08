@@ -23,7 +23,7 @@ class MonolithEvents
  		
  		
  		add_action('init', array($this, 'monolith_events_setup'), 0);
- 		add_action("template_redirect", array($this, 'me_theme_redirect'));
+ 	//	add_action("template_redirect", array($this, 'me_theme_redirect'));
  		add_action('wp_enqueue_scripts', array($this, 'load_event_scripts'));
  	}
 
@@ -37,16 +37,7 @@ class MonolithEvents
 	public function monolith_events_setup() {
 	
 	
-		function monolith_events_admin_icon() //change the event icon to the new cool dashicon ones :)
-		{
-		echo '
-		<style>
-		#adminmenu #menu-posts-events div.wp-menu-image:before { content: "\f163"; }
-		</style>
-		';
-		}
-		add_action( 'admin_head', 'monolith_events_admin_icon' );
-	
+
 
 	    $labels = array(
 	        'name' => _x( 'Events', 'events' ),
@@ -73,6 +64,7 @@ class MonolithEvents
 	        'show_ui' => true,
 	        'show_in_menu' => true,
 	        'menu_position' => 5,
+	        'menu_icon' => 'dashicons-calendar-alt',
 
 
 	        'show_in_nav_menus' => true,
@@ -131,7 +123,7 @@ class MonolithEvents
 						'type' => 'text',
 						'instructions' => 'Use the 24h clock',
 						'default_value' => '',
-						'placeholder' => '',
+						'placeholder' => '20:00',
 						'prepend' => '',
 						'append' => '',
 						'formatting' => 'none',
@@ -228,7 +220,7 @@ class MonolithEvents
 						'name' => 'cost',
 						'type' => 'text',
 						'default_value' => '',
-						'placeholder' => '',
+						'placeholder' => '£12',
 						'prepend' => '',
 						'append' => '',
 						'formatting' => 'none',
@@ -240,7 +232,7 @@ class MonolithEvents
 						'name' => 'facebook_link',
 						'type' => 'text',
 						'default_value' => '',
-						'placeholder' => '',
+						'placeholder' => 'http://facebook.com/event-name',
 						'prepend' => '',
 						'append' => '',
 						'formatting' => 'none',
@@ -252,7 +244,7 @@ class MonolithEvents
 						'name' => 'website_link',
 						'type' => 'text',
 						'default_value' => '',
-						'placeholder' => '',
+						'placeholder' => 'http://website.com',
 						'prepend' => '',
 						'append' => '',
 						'formatting' => 'none',
@@ -294,7 +286,7 @@ class MonolithEvents
 	///////////////////////////////////////////////////////////////////////////////////
 	// TEMPLATE FALLBACK
 	///////////////////////////////////////////////////////////////////////////////////
-
+	
 	public function me_theme_redirect() {
 
 	    global $wp;

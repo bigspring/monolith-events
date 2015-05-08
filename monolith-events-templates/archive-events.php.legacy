@@ -29,21 +29,7 @@ $args = array(
 query_posts($args); ?>
 
 
-<div class="wrapper-main" role="main">
-
-	<div class="<?= CONTAINER_CLASSES; ?>">
-
-		<? get_template_part('parts/breadcrumb'); // load breadcrumb ?>
-
-		<div class="<?= ROW_CLASSES ?>">
-
-			<div class="<?= MAIN_SIZE ?>">
-
-				<header class="page-header archive-header" itemprop="name">
-
-					<h1 class="archive-title h1">Upcoming Events</h1>
-
-				</header>
+<?php get_header(); ?>
 
 					<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
@@ -117,15 +103,5 @@ query_posts($args); ?>
 					<?php endif; ?>
 
 					<?php get_template_part('parts/pagination') // load the pagination part ?>
-
-			</div><!-- MAIN_SIZE -->
-
-			<? get_template_part('parts/sidebar'); // right sidebar ?>
-
-		</div><!-- /ROW_CLASSES -->
-
-	</div><!-- /CONTAINER_CLASSES -->
-
-</div><!-- /main -->
 
 <?php get_footer() ?>
